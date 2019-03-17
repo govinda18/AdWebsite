@@ -74,11 +74,15 @@ def loginView(request):
 		try:
 			client = Client.objects.get(user = user)
 		except:
-			messages.error(request, "Invalid Cerdentials.")
-			return redirect('/login/')
-		if not client.verified:
-			messages.error(request, "Email Id not verified. <a href='/register/resend_validation?uid=%s'>Resend Email?</a>" % (client.id),extra_tags='safe')
-			return redirect("/login/")      
+			try:
+				admin = Admin.objects.get(user = user)
+			except:
+				messages.error(request, "Invalid Cerdentials.")
+				return redirect('/login/')
+		if not admin:
+			if not client.verified:
+				messages.error(request, "Email Id not verified. <a href='/register/resend_validation?uid=%s'>Resend Email?</a>" % (client.id),extra_tags='safe')
+				return redirect("/login/")      
 		messages.success(request, "Successfully logged in.")
 		login(request, user)
 		return redirect('/')
