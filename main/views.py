@@ -71,6 +71,14 @@ def loginView(request):
 				return redirect("/register/")
 			messages.error(request, "Invalid Credentials.")
 			return redirect("/register/")
+		try:
+			client = Client.objects.get(user = user)
+		except:
+			admin = Admin.objects.get(user = user)
+		if client:
+			if not client.verified:
+				messages.error(request, "Email ID not verified. <a href='/register/resend_validation?uid=%s'>Resend Email?</a>" % (activation.profile_ref.id),extra_tags='safe')
+				return redirect('/login/')
 		messages.success(request, "Successfully logged in.")
 		login(request, user)
 		return redirect('/')
