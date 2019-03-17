@@ -74,6 +74,7 @@ def loginView(request):
 		try:
 			client = Client.objects.get(user = user)
 		except:
+			client = None
 			admin = Admin.objects.get(user = user)
 		if client:
 			if not client.verified:
