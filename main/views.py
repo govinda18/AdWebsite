@@ -10,7 +10,7 @@ import random
 import string
 
 
-host_location = 'http://127.0.0.1:8000/'
+host_location = 'http://adwebsite.pythonanywhere.com/'
 
 # Create your views here.
 def index(request):
