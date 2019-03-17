@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/modern-business.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body> 
+
+  <!-- Navigation -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Advertisement Website</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/about/"><i class="fa fa-info-circle"></i> About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/events/"><i class="fa fa-calendar"></i> Events</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/establishments/"><i class="fa fa-building"></i> Establishments</a>
+          </li>
+          {% if not user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="/login/" ><i class="fa fa-sign-in"></i> Login/Register</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard/" ><i class="fa fa-dashboard"></i> Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout/" ><i class="fa fa-sign-out"></i> Logout</a>
+          </li>
+          {% endif %}
+<!--          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Portfolio
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+              <a class="dropdown-item" href="portfolio-1-col.html">1 Column Portfolio</a>
+              <a class="dropdown-item" href="portfolio-2-col.html">2 Column Portfolio</a>
+              <a class="dropdown-item" href="portfolio-3-col.html">3 Column Portfolio</a>
+              <a class="dropdown-item" href="portfolio-4-col.html">4 Column Portfolio</a>
+              <a class="dropdown-item" href="portfolio-item.html">Single Portfolio Item</a>
+            </div>
+          </li>
+-->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {% if messages %}
+                <div class="container" style="max-width:400px">
+                    {% for message in messages %}
+                    <div style="text-align:center" {% if message.tags == 'error' %} class="alert alert-danger" role="alert" {% else %} class="alert alert-success" {% endif %}>{{ message|safe }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+  {% block body %}
+  {% endblock %}
+
+  </body>
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+

@@ -1,0 +1,353 @@
+{% load static %}
+{% include 'main/navbar.html' %}
+
+  <title>Establishments</title>
+
+{% block body %}
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+    <h1 class="mt-4 mb-3">Dashboard
+    </h1>
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="/">Home</a>
+      </li>
+      <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+    <div class="row">
+      <div class="col-md-5">
+
+        <!-- Search Widget -->
+        <div class="card mb-4">
+          <h5 class="card-header">My Profile</h5>
+          <div class="card-body">
+            <div >
+              {% if not isadmin %}
+                <p>
+                  <i title="address" class="fa fa-address-card-o"></i> {{client.address}}
+                </p>
+                <p>
+                  <i title="phone" class="fa fa-phone"></i> {{client.phone}}
+                </p>
+                <p>
+                  <i title="email" class="fa fa-envelope"></i> {{client.user.username}}
+                </p>
+                <p>
+                  <i title="website" class="fa fa-link"></i><a href="{{client.website}}"> {{client.website}}</a>
+                </p>
+                <p>
+                  <i title="facebook" class="fa fa-facebook"></i><a href="{{client.fb}}"> {{client.fb}}</a>
+                </p>
+                {% else %}
+                <p>Admin</p> 
+                {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="col-md-3">
+        <!-- Search Widget -->
+        <div class="card mb-4">
+          <h5 class="card-header">My Stats</h5>
+          <div class="card-body">
+            <div >
+              {% if not isadmin %}
+                <p>
+                  <i title="ad count" class="fa fa-star"></i> Total ads -  {{ad_count}}
+                </p>
+                  <i title="event count" class="fa fa-star"></i> Total events -  {{event_count}}
+                </p>
+                <p>
+                  <i title="ad count" class="fa fa-star"></i> Approved ads -  {{approvedad_count}}
+                </p>
+                <p>
+                <p>
+                  <i title="ad count" class="fa fa-star"></i> Approved events -  {{approvedevent_count}}
+                </p>
+                {% else %}
+                <p>Admin</p> 
+                {% endif %}
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+          <h5 class="card-header">Change Password</h5>
+          <div class="card-body">
+          <form action="/changepassword/" method="post">
+            {% csrf_token %}
+            <div>
+              <input type="password" name="oldpass" class="form-control" placeholder="Old Password">
+              <br>
+              <input type="password" name="newpass" class="form-control" placeholder="New Password">
+              <br>
+              <input type="password" name="confirmnewpass" class="form-control" placeholder="Confirm New Password">
+              <br>
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="submit">Submit</button>
+              </span>
+            </div>
+          </form>
+          </div>
+        </div>
+    </div>
+    </div>
+    {% if not isadmin %}
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <h5 class="card-header">Add Establishment</h5>
+          <div class="card-body">
+          <form action="/uploadad/" method="post"  enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+              <input type="text" required name="title" class="form-control" placeholder="Title of Advertisement">
+              <br>
+              <input type="text" required name="desc" class="form-control" placeholder="Description" >
+              <br>
+              <input type="text" required name="sevices" class="form-control" placeholder="Products/Services" >
+              <br>
+              <select name="category" required class="form-control">
+                {% for category in categories %}
+                <option value="{{category.id}}">{{category}}</option>
+                {% endfor %}
+              </select>
+              <br>
+              <select name="location" required class="form-control">
+                {% for location in locations %}
+                <option value="{{location.id}}">{{location}}</option>
+                {% endfor %}
+              </select>
+              <br>
+              <input type="file" required accept="image/*" name="img" >
+              <br><br>
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="submit">Submit</button>
+              </span>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <h5 class="card-header">Add Event</h5>
+          <div class="card-body">
+          <form action="/uploadevent/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+              <input type="text" required name="title" class="form-control" placeholder="Title of Event">
+              <br>
+              <input type="text" required name="desc" class="form-control" placeholder="Description">
+              <br>
+              <input type="text" required name="venue" class="form-control" placeholder="Venue of the event">
+              <br>
+              <input type="datetime-local" title="Date and Time of the event" required name="time" class="form-control" placeholder="Date and time of Event">
+              <br>
+              <textarea style="white-space: pre-wrap;" required name="fees" class="form-control" placeholder="Fee details of the event including entry fees and registration fees"></textarea>
+              <br>
+              <select name="category" required class="form-control" >
+                {% for category in categories %}
+                <option value="{{category.id}}">{{category}}</option>
+                {% endfor %}
+              </select>
+              <br>
+              <select name="location" required class="form-control">
+                {% for location in locations %}
+                <option value="{{location.id}}">{{location}}</option>
+                {% endfor %}
+              </select>
+              <br>
+              <input type="file" required accept="image/*" name="img" >
+              <br><br>
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="submit">Submit</button>
+              </span>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <h3>Pending Ads</h3>
+    <div class="row">
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-12">
+
+        <div class="row">
+          {% for ad in ads %}	
+          {% if not ad.verified %}
+	      <div class="col-lg-3 col-sm-6 portfolio-item">
+	        <div class="card h-100">
+	          <a href="#"><img class="card-img-top" src="{{ ad.image.url }}" style="height: 150px;" alt=""></a>
+	          <div class="card-body">
+	            <h4 class="card-title">
+	              {{ ad.title }}
+	            </h4>
+	            <h5 class="card-title">
+	              {{ ad.client.organisation }}
+	            </h5>
+	          </div>
+            <div class="row">
+              <div class="col-md-6 portfolio-item">
+                <form method="post" action="/delete/{{ad.id}}/">
+                  {% csrf_token %}
+                <button type="submit" class="btn btn-danger" style="margin-left: 20px;">Delete</button></form>
+              </div>
+            {% if isadmin %}
+              <div class="col-md-6 portfolio-item">
+                <form method="post" action="/approve/{{ad.id}}/">
+                  {% csrf_token %}
+                <button type="submit" class="btn btn-success" style="margin-left: 20px;">Approve</button></form>
+              </div>
+            </div>
+            {% endif %}
+	        </div>
+	      </div>
+        {% endif %}
+	    {% endfor %}
+        </div>
+
+      </div>
+
+    </div>
+    <br>
+    <h3>Approved Ads</h3>
+    <div class="row">
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-12">
+
+        <div class="row">
+          {% for ad in ads %} 
+          {% if ad.verified %}
+        <div class="col-lg-3 col-sm-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{{ ad.image.url }}" style="height: 150px;" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                {{ ad.title }}
+              </h4>
+              <h5 class="card-title">
+                {{ ad.client.organisation }}
+              </h5>
+            </div>
+            <div class="row">
+              <div class="col-md-6 portfolio-item">
+                <form method="post" action="/delete/{{ad.id}}/">
+                  {% csrf_token %}
+                <button type="submit" class="btn btn-danger" style="margin-left: 20px;">Delete</button></form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+        </div>
+
+      </div>
+      
+      </div>
+      <br>
+    <h3>Pending Events</h3>
+    <div class="row">
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-12">
+
+        <div class="row">
+          {% for event in events %} 
+          {% if not event.verified %}
+        <div class="col-lg-3 col-sm-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{{ event.image.url }}" style="height: 150px;" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                {{ event.title }}
+              </h4>
+            </div>
+            <div class="row">
+              <div class="col-md-6 portfolio-item">
+                <form method="post" action="/deleteevent/{{event.id}}/">
+                  {% csrf_token %}
+                <button type="submit" class="btn btn-danger" style="margin-left: 20px;">Delete</button></form>
+              </div>
+            {% if isadmin %}
+              <div class="col-md-6 portfolio-item">
+                <form method="post" action="/approveevent/{{event.id}}/">
+                  {% csrf_token %}
+                <button type="submit" class="btn btn-success" style="margin-left: 20px;">Approve</button></form>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+        </div>
+
+      </div>
+
+    </div>
+    <br>
+    <h3>Approved Events</h3>
+    <div class="row">
+
+      <!-- Blog Entries Column -->
+      <div class="col-md-12">
+
+        <div class="row">
+          {% for event in events %} 
+          {% if event.verified %}
+        <div class="col-lg-3 col-sm-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{{ event.image.url }}" style="height: 150px;" alt=""></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                {{ event.title }}
+              </h4>
+            </div>
+            <div class="row">
+              <div class="col-md-6 portfolio-item">
+                <form method="post" action="/deleteevent/{{event.id}}/">
+                  {% csrf_token %}
+                <button type="submit" class="btn btn-danger" style="margin-left: 20px;">Delete</button></form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+        </div>
+
+      </div>
+      
+      </div>
+
+
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+{% endblock %}
