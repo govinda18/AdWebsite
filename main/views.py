@@ -14,7 +14,7 @@ host_location = 'http://adwebsite.pythonanywhere.com/'
 
 # Create your views here.
 def index(request):
-	ads = Ad.objects.filter(verified = True).order_by('-date')
+	ads = Advertisement.objects.all()
 	return render(request, 'main/index.html',context={
 		"ads" : ads,
 		})
@@ -70,7 +70,7 @@ def loginView(request):
 				messages.error(request, "This Email Is Not Registered.") 
 				return redirect("/register/")
 			messages.error(request, "Invalid Credentials.")
-			return redirect("/register/")
+			return redirect("/login/")
 		try:
 			client = Client.objects.get(user = user)
 		except:
@@ -350,6 +350,7 @@ def uploadAd(request):
 	if not request.user.is_authenticated:
 		messages.error(request, "Please login to continue.")
 		return redirect('/login/')
+	print(request.POST)
 	required = ['title', 'category', 'location','desc','services']
 	for item in required:
 		if item not in request.POST:

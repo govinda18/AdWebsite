@@ -52,10 +52,10 @@
     <div class="col-md-3">
         <!-- Search Widget -->
         <div class="card mb-4">
+        {% if not isadmin %}
           <h5 class="card-header">My Stats</h5>
           <div class="card-body">
-            <div >
-              {% if not isadmin %}
+            <div>
                 <p>
                   <i title="ad count" class="fa fa-star"></i> Total ads -  {{ad_count}}
                 </p>
@@ -68,11 +68,17 @@
                 <p>
                   <i title="ad count" class="fa fa-star"></i> Approved events -  {{approvedevent_count}}
                 </p>
-                {% else %}
-                <p>Admin</p> 
-                {% endif %}
             </div>
           </div>
+                {% else %}
+                <h5 class="card-header">Upload Advertisement</h5>
+                <div class="card-body">
+                <form method="post" action="/addadv/" enctype="multipart/form-data">
+                  <input type="file" required accept="image/*" name="img">
+                </form> 
+                </div>
+                {% endif %}
+            
         </div>
     </div>
     <div class="col-md-4">
@@ -110,7 +116,7 @@
               <br>
               <input type="text" required name="desc" class="form-control" placeholder="Description" >
               <br>
-              <input type="text" required name="sevices" class="form-control" placeholder="Products/Services" >
+              <input type="text" required name="services" class="form-control" placeholder="Products/Services" >
               <br>
               <select name="category" required class="form-control">
                 {% for category in categories %}

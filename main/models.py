@@ -72,3 +72,6 @@ class Event(models.Model):
 
 	def __str__(self):
 		return self.title
+
+class Advertisement(models.Model):
+	image = models.ImageField(upload_to = 'media/')

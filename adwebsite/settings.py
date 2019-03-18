@@ -22,7 +22,7 @@ SECRET_KEY = '&me@8vx&lt(mrt*9d3(owsjmgry2_by=&g(_g66-x(9o)yuefq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['adwebsite.pythonanywhere.com']
+ALLOWED_HOSTS = ['adwebsite.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
