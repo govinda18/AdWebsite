@@ -1,7 +1,7 @@
 {% load static %}
 {% include 'main/navbar.html' %}
 
-  <title>Establishments</title>
+  <title>Events</title>
 
 {% block body %}
 
@@ -30,7 +30,7 @@
           {% for event in events %}	
 	      <div class="col-lg-4 col-sm-6 portfolio-item">
 	        <div class="card h-100">
-	          <a href="#"><img class="card-img-top" src="{{ ad.image.url }}" style="height: 150px;" alt=""></a>
+	          <a href="#"><img class="card-img-top" src="{{ event.image.url }}" style="height: 150px;" alt=""></a>
 	          <div class="card-body">
 	            <h4 class="card-title">
 	              {{ event.title }}

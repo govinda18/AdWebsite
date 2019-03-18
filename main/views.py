@@ -394,7 +394,7 @@ def events(request):
 		if request.POST['location'] != "all":
 			allowed_location = Location.objects.get(pk = request.POST['location']) 
 			events = events.filter(location = allowed_location)
-		events = events.order_by('-date')
+		events = events.order_by('-time')
 		return render(request, 'main/events.html', context = {
 			"events" : events,
 			"categories" : categories,
