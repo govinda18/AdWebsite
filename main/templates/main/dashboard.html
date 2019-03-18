@@ -74,7 +74,11 @@
                 <h5 class="card-header">Upload Advertisement</h5>
                 <div class="card-body">
                 <form method="post" action="/addadv/" enctype="multipart/form-data">
-                  <input type="file" required accept="image/*" name="img">
+                    {% csrf_token %}
+                  <input type="file" required accept="image/*" name="img"><br><br>
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="submit">Submit</button>
+              </span>
                 </form> 
                 </div>
                 {% endif %}

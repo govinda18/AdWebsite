@@ -58,7 +58,16 @@
     {% for ad in ads %}	
       <div class="col-lg-4 col-sm-6 portfolio-item">
         <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="{{ ad.image.url }}" style="height: 200px;" alt=""></a>
+          <a href="#"><img class="card-img-top" src="{{ ad.image.url }}" style="height: 150px;" alt=""></a>
+          <div class="card-body">
+            
+            <div class="row">
+              <div class="col-md-6 portfolio-item">
+                <form method="post" action="/deleteadv/{{ad.id}}/">
+                  {% csrf_token %}
+                <button type="submit" class="btn btn-danger" style="margin-left: 20px;">Delete</button></form>
+              </div>
+            </div>
           </div>
         </div>
       </div>

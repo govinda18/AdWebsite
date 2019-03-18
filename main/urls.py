@@ -37,4 +37,6 @@ urlpatterns = [
     url(r'^uploadevent/$', views.uploadEvent, name='uploadevent'),
     url(r'^deleteevent/(?P<adid>\d+)/$', views.deleteEvent, name = 'deletead'),
     url(r'^approveevent/(?P<adid>\d+)/$', views.approveEvent, name = 'approvead'),
+    url(r'^addadv/$', views.addAdvertisement, name = 'addadv'),
+    url(r'^deleteadv/(?P<adid>\d+)/$', views.deleteAdvertisement, name = 'deleteadv'),
 ]

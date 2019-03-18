@@ -482,3 +482,42 @@ def approveEvent(request, adid):
 	event.verified = True
 	event.save()
 	return redirect('/dashboard/')
+
+def addAdvertisement(request):
+	if not request.user.is_authenticated:
+		messages.error(request, "Please login to continue.")
+		return redirect('/login/')
+	required = []
+	for item in required:
+		if item not in request.POST:
+			messages.error(request, 'Incomplete Information.')
+			return redirect('/dashboard/')
+	if 'img' not in request.FILES:
+		messages.error(request, 'Invalid image.')
+		return redirect('/dashboard/')
+	try:
+		admin = Admin.objects.get(user = request.user)
+	except:
+		messages.error(request, "You are not authorized to perform this action.")
+	advertisement = Advertisement()
+	advertisement.image = request.FILES['img']
+	advertisement.save()
+	messages.success(request, 'The Advertisement was successfully uploaded.')
+	return redirect('/dashboard/')
+
+def deleteAdvertisement(request, adid):
+	if not request.user.is_authenticated:
+		messages.error(request, "Please login to continue.")
+		return redirect('/login/')
+	try:
+		admin = Admin.objects.get(user = request.user)
+	except:
+		messages.error(request, "You are not authorized to perform this action.")
+	try:
+		advertisement = Advertisement.objects.get(pk = adid)
+	except:
+		messages.error(request, "No such advertisement exists.")
+		return redirect('/')
+	advertisement.delete()
+	messages.success(request, 'The Advertisement was successfully deleted.')
+	return redirect('/')
